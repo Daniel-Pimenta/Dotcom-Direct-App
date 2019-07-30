@@ -31,10 +31,10 @@ public class DataBase {
   public JsonDBTemplate init() {
     try {   
       System.out.println("Conectando...");
-      //ICipher cipher = new DefaultAESCBCCipher("1r8+24pibarAWgS85/Heeg==");
+      ICipher cipher = new DefaultAESCBCCipher("1r8+24pibarAWgS85/Heeg==");
       String dbFilesLocation = System.getProperty("user.home")+ File.separator+"jsondb";
       System.out.println(dbFilesLocation);
-      jsonDBTemplate = new JsonDBTemplate(dbFilesLocation, baseScanPackage); //, cipher);
+      jsonDBTemplate = new JsonDBTemplate(dbFilesLocation, baseScanPackage, cipher);
       return jsonDBTemplate;
     } catch (Exception e) {
       msgErr = e.getMessage();

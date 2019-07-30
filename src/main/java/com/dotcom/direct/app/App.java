@@ -7,6 +7,7 @@ package com.dotcom.direct.app;
 
 import com.dotcom.direct.app.db.DataBase;
 import com.dotcom.direct.app.model.Contatos;
+import com.dotcom.direct.app.repository.ContatosRepository;
 import io.jsondb.JsonDBTemplate;
 
 /**
@@ -15,30 +16,20 @@ import io.jsondb.JsonDBTemplate;
  */
 public class App {
 
+  ContatosRepository cr;
+  
   public static void main(String args[]) {
     System.out.println("INICIO");
     App app = new App();
     app.init();
   }
 
-  public void App() {
-    
-  }
+ public void App() {  }
   
-  public void init() {
-    DataBase db = new DataBase();
-    JsonDBTemplate jsonDBTemplate = db.init();
-    if (jsonDBTemplate == null) {
-      System.out.println("Erro de Coneção:"+db.getMsgErr());
-    } else {
-      jsonDBTemplate.createCollection(Contatos.class);
-      //
-      Contatos c = new Contatos();
-      c.setId("11");
-      c.setIp("ec2-54-191-11");
-      //c.setPrivateKey("b87eb02f5dd7e5232d7b0fc30a5015e4");
-      jsonDBTemplate.insert(c);
-    }
+  private void init(){
+    cr = new ContatosRepository();
+    cr.init();
+    cr.addContato();
   }
 
 }

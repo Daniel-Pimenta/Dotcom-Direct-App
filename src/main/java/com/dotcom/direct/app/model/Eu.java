@@ -9,25 +9,23 @@ import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import io.jsondb.annotation.Secret;
 import java.util.Date;
-
-
 /**
  *
  * @author Daniel Pimenta
  */
 
-@Document(collection = "contatos", schemaVersion= "1.0")
-public class Contatos {
-
+@Document(collection = "eu", schemaVersion= "1.0")
+public class Eu {
+  
   @Id 
-  private String  id;
+  private String id;
   @Secret
-  private String  nome;
-  private String  ip;
-  private int     porta;
-  private boolean onLine;
-  private Date    lastOnLine;
-  private String  privateKey;  
+  private String nome;
+  private String ip;
+  private int    porta;
+  private Date   data;
+  @Secret
+  private String hashBlock;
 
   public String getId() {
     return id;
@@ -61,29 +59,22 @@ public class Contatos {
     this.porta = porta;
   }
 
-  public boolean isOnLine() {
-    return onLine;
+  public Date getData() {
+    return data;
   }
 
-  public void setOnLine(boolean onLine) {
-    this.onLine = onLine;
+  public void setData(Date data) {
+    this.data = data;
   }
 
-  public Date getLastOnLine() {
-    return lastOnLine;
+  public String getHashBlock() {
+    return hashBlock;
   }
 
-  public void setLastOnLine(Date lastOnLine) {
-    this.lastOnLine = lastOnLine;
-  }
-
-  public String getPrivateKey() {
-    return privateKey;
-  }
-
-  public void setPrivateKey(String privateKey) {
-    this.privateKey = privateKey;
+  public void setHashBlock(String hashBlock) {
+    this.hashBlock = hashBlock;
   }
   
 
+  
 }
