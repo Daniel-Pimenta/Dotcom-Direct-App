@@ -8,7 +8,6 @@ package com.dotcom.direct.app.model;
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import io.jsondb.annotation.Secret;
-import java.util.Date;
 /**
  *
  * @author Daniel Pimenta
@@ -23,9 +22,11 @@ public class Eu {
   private String nome;
   private String ip;
   private int    porta;
-  private Date   data;
-  @Secret
   private String hashBlock;
+  @Secret
+  private String publicKey;
+  @Secret
+  private String privateKey;
 
   public String getId() {
     return id;
@@ -59,14 +60,6 @@ public class Eu {
     this.porta = porta;
   }
 
-  public Date getData() {
-    return data;
-  }
-
-  public void setData(Date data) {
-    this.data = data;
-  }
-
   public String getHashBlock() {
     return hashBlock;
   }
@@ -74,7 +67,21 @@ public class Eu {
   public void setHashBlock(String hashBlock) {
     this.hashBlock = hashBlock;
   }
-  
 
+  public String getPublicKey() {
+    return publicKey;
+  }
+
+  public void setPublicKey(String publicKey) {
+    this.publicKey = publicKey;
+  }
+
+  public String getPrivateKey() {
+    return privateKey;
+  }
+
+  public void setPrivateKey(String privateKey) {
+    this.privateKey = privateKey;
+  }
   
 }

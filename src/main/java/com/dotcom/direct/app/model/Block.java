@@ -26,8 +26,7 @@ public class Block {
   private String    mensagem;
   private String    hash;
   private String    hashAnt;
-  private PublicKey publicKey;
-  
+  private String    publicKey;
   public String getId() {
     return id;
   }
@@ -49,7 +48,7 @@ public class Block {
   public String getHashAnt() {
     return hashAnt;
   }
-  public PublicKey getPublicKey() {
+  public String getPublicKey() {
     return publicKey;
   }
   public void setId(String id) {
@@ -73,9 +72,11 @@ public class Block {
   public void setHashAnt(String hashAnt) {
     this.hashAnt = hashAnt;
   }
-  public void setPublicKey(PublicKey publicKey) {
+  public void setPublicKey(String publicKey) {
     this.publicKey = publicKey;
   }
+  
+
 
 
   

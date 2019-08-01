@@ -6,16 +6,15 @@
 package com.dotcom.direct.app.repository;
 
 import com.dotcom.direct.app.db.DataBase;
-import com.dotcom.direct.app.model.Contatos;
-import io.jsondb.InvalidJsonDbApiUsageException;
+import com.dotcom.direct.app.model.Eu;
 import io.jsondb.JsonDBTemplate;
 
 /**
  *
  * @author Daniel Pimenta
  */
-public class ContatosRepository {
-
+public class EuRepository {
+  
   private DataBase db;
   private JsonDBTemplate jsonDBTemplate;
 
@@ -25,22 +24,22 @@ public class ContatosRepository {
     if (jsonDBTemplate == null) {
       System.out.println("Erro de Coneção:" + db.getMsgErr());
     } else {
-      if (!jsonDBTemplate.collectionExists(Contatos.class)) {
-        System.out.println("Criando DB Contatos...");
-        jsonDBTemplate.createCollection(Contatos.class);
+      if (!jsonDBTemplate.collectionExists(Eu.class)) {
+        System.out.println("Criando DB Eu...");
+        jsonDBTemplate.createCollection(Eu.class);
       } else {
-        System.out.println("DB Contatos já criado...");
+        System.out.println("Eu Contatos já criado...");
       }
     }
   }
-
-  public void save(Contatos c) {
-    System.out.println("Add Contato...");
+  
+  public void save(Eu eu) {
+    System.out.println("Add Eu...");
     try {
-      jsonDBTemplate.upsert(c);
+      jsonDBTemplate.upsert(eu);
     } catch (Exception e) {
       System.out.println(e.toString());
     }
   }
-
+  
 }

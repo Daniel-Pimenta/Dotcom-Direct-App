@@ -23,9 +23,8 @@ import javax.crypto.NoSuchPaddingException;
 public class KeyPairGen {
 
   private PrivateKey priv;
-  private PublicKey pub;
-
-  private Cipher cipher;
+  private PublicKey  pub;
+  private Cipher     cipher;
 
   public KeyPairGen() {
     
@@ -33,7 +32,7 @@ public class KeyPairGen {
   
   
   public byte[] encryptMsg(byte[] input, PrivateKey key) {
-    System.out.println("encryptMsg");
+    //System.out.println("encryptMsg");
     if (key == null) return null;
     try {
       cipher = Cipher.getInstance("RSA");
@@ -47,7 +46,7 @@ public class KeyPairGen {
   }
 
   public byte[] decryptMsg(byte[] input, PublicKey key) {
-    System.out.println("decryptMsg");
+    //System.out.println("decryptMsg");
     if (key == null) return null;
     try {
       cipher = Cipher.getInstance("RSA");
@@ -68,7 +67,7 @@ public class KeyPairGen {
   }
   
   public PrivateKey getPrivateKEY(String key) {
-    System.out.println("getPrivateKEY");
+    //System.out.println("getPrivateKEY");
     try {
       byte[] keyBytes = this.getByteKey(key);      
       PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -82,9 +81,10 @@ public class KeyPairGen {
   }
   
   public PublicKey getPublicKey(String key) {
-    System.out.println("getPublicKey");
+    //System.out.println("getPublicKey");
     try {
-      byte[] keyBytes = this.getByteKey(key);      
+      Base64.Decoder b64d = Base64.getDecoder();
+      byte[] keyBytes =   b64d.decode(key.getBytes());      
       X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
       KeyFactory kf = KeyFactory.getInstance("RSA");
       PublicKey pk = kf.generatePublic(spec);
@@ -95,14 +95,14 @@ public class KeyPairGen {
     return null;
   }
   
-  public String getStrKey(byte[] key) {
+  public String getStrKey(byte[] b) {
     Base64.Encoder b64e = Base64.getEncoder();
-    return new String(b64e.encode(key), StandardCharsets.UTF_8);
+    return new String(b64e.encode(b));
   }
 
-  public byte[] getByteKey(String key) {
+  public byte[] getByteKey(String s) {
     Base64.Decoder b64d = Base64.getDecoder();
-    return b64d.decode(key);
+    return b64d.decode(s.getBytes());
   }
   
   public void generate() {
@@ -112,7 +112,7 @@ public class KeyPairGen {
       keyGen.initialize(1024, random);
       KeyPair pair = keyGen.generateKeyPair();
       this.priv = pair.getPrivate();
-      this.pub = pair.getPublic();
+      this.pub  = pair.getPublic();
       //mostrar(pair);
     } catch (Exception e) {
       e.printStackTrace();

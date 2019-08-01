@@ -5,18 +5,13 @@
  */
 package com.dotcom.direct.app;
 
-import java.nio.charset.StandardCharsets;
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-
-import com.dotcom.direct.app.db.DataBase;
 import com.dotcom.direct.app.model.Block;
-import com.dotcom.direct.app.model.Contatos;
+import com.dotcom.direct.app.model.Eu;
 import com.dotcom.direct.app.repository.ContatosRepository;
+import com.dotcom.direct.app.repository.EuRepository;
 import com.dotcom.direct.app.service.BlockService;
 import com.dotcom.direct.app.util.KeyPairGen;
 
-import io.jsondb.JsonDBTemplate;
 
 /**
  *
@@ -25,10 +20,13 @@ import io.jsondb.JsonDBTemplate;
 public class App {
 
   private ContatosRepository cr;
+  private EuRepository er;
+  
   private BlockService bs;
+  
   private KeyPairGen key;
 
-  public void App() {
+  public App() {
   }
   
   public static void main(String args[]) {
@@ -43,22 +41,37 @@ public class App {
     
     String strKeyPub = key.getStrKey(key.getPub().getEncoded());
     String strKeyPri = key.getStrKey(key.getPriv().getEncoded());
-    
-    System.out.println("strKeyPub :" + strKeyPub);
-    System.out.println("strKeyPri :" + strKeyPri);
-    
+
     try {
       //
-      byte[] in = key.encryptMsg("Ola Mundo".getBytes(), key.getPrivateKEY(strKeyPri));
-      System.out.println("EmCript:" + new String(in, StandardCharsets.UTF_8));
-      //
-      byte[] out = key.decryptMsg(in, key.getPublicKey(strKeyPub));
-      System.out.println("DeCript:" + new String(out));
+      String msg = "Ola Mundo";
+
+      byte[] crptMsg = key.encryptMsg( msg.getBytes(), key.getPrivateKEY(strKeyPri));
+      byte[] dcrptMsg = key.decryptMsg(crptMsg, key.getPublicKey(strKeyPub));
+
+     
+      bs = new BlockService();
+      
+      Block b = new Block();
+      b.setPublicKey(strKeyPub);
+      Block newBlock = this.bs.getBlock(b);
+      System.out.println(newBlock.getId());
+      
+      Eu eu = new Eu();
+      eu.setId(newBlock.getId());
+      eu.setIp(newBlock.getIp());
+      eu.setPorta(63210);
+      eu.setHashBlock(newBlock.getHash());
+      eu.setPrivateKey(strKeyPri);
+      eu.setPublicKey(strKeyPub);
+      eu.setNome("DANIEL S PIMENTA");
+      er = new EuRepository();
+      er.init();
+      er.save(eu);
       
     } catch (Exception e) {
-      e.printStackTrace();
+      System.out.println("ERRO:"+e.toString());
     }
-    
   }
   
   private void createKey() {
@@ -67,9 +80,7 @@ public class App {
   }
 
   private void newContato() {
-    cr = new ContatosRepository();
-    cr.init();
-    cr.addContato();
+
   }
 
 }
